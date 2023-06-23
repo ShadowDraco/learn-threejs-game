@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import './App.css'
+import './App.scss'
 import { socket } from './socket'
+import ThreeCanvas from './three/ThreeCanvas'
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
   const [testEvent, setTestEvent] = useState([])
-  const [count, setCount] = useState(0)
 
   useEffect(() => {
     function onConnect() {
@@ -34,10 +34,8 @@ function App() {
   return (
     <>
       <h1>{isConnected ? 'Connected!' : 'Not Connected...'}</h1>
+      <ThreeCanvas />
       <div className='card'>
-        <button onClick={() => setCount(count => count + 1)}>
-          count is {count}
-        </button>
         <p>{testEvent}</p>
       </div>
     </>
