@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.scss'
 import { socket } from './socket'
 import ThreeCanvas from './three/ThreeCanvas'
+import { Container } from '@chakra-ui/react'
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected)
@@ -33,11 +34,13 @@ function App() {
 
   return (
     <>
-      <h1>{isConnected ? 'Connected!' : 'Not Connected...'}</h1>
-      <ThreeCanvas />
-      <div className='card'>
-        <p>{testEvent}</p>
-      </div>
+      <Container paddingY={5} margin={0} maxWidth={'full'}>
+        <h1>
+          {isConnected ? 'Connected!' : 'Not Connected...'}
+          <p>{testEvent}</p>
+        </h1>
+        <ThreeCanvas />
+      </Container>
     </>
   )
 }
