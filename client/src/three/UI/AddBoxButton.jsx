@@ -4,10 +4,9 @@ import { Text } from '@react-three/drei'
 import randomHex from 'random-hex-code-gen'
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
-import { TEXTOFFSET } from './Constants.js'
+import { FONTSIZE, TEXTOFFSET } from './Constants.js'
 
-export default function AddBoxButton({ position, boxes, setBoxes }) {
-  const meshRef = useRef(null)
+export default function AddBoxButton({ position, boxes, setBoxes, meshRef }) {
   const [hovered, setHover] = useState(false)
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export default function AddBoxButton({ position, boxes, setBoxes }) {
     const box = {
       position: position
         ? position
-        : [Math.random() * 10, Math.random() * 10, Math.random() * 10],
+        : [Math.random() * -10, Math.random() * -10, 0],
 
       color: randomHex.generate(),
     }
@@ -44,7 +43,7 @@ export default function AddBoxButton({ position, boxes, setBoxes }) {
         color='black'
         anchorX='center'
         anchorY='middle'
-        fontSize={0.04}
+        fontSize={FONTSIZE}
         position={TEXTOFFSET}
       >
         Add Cube
@@ -58,4 +57,5 @@ AddBoxButton.propTypes = {
   setBoxes: PropTypes.func,
   setCount: PropTypes.func,
   position: PropTypes.array,
+  meshRef: PropTypes.object,
 }
