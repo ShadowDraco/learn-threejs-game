@@ -4,8 +4,9 @@ import { Text } from '@react-three/drei'
 import randomHex from 'random-hex-code-gen'
 import { useEffect, useRef, useState } from 'react'
 import PropTypes from 'prop-types'
+import { TEXTOFFSET } from './Constants.js'
 
-export default function AddBoxButton({ position, boxes, setBoxes, setCount }) {
+export default function AddBoxButton({ position, boxes, setBoxes }) {
   const meshRef = useRef(null)
   const [hovered, setHover] = useState(false)
 
@@ -19,36 +20,34 @@ export default function AddBoxButton({ position, boxes, setBoxes, setCount }) {
       position: position
         ? position
         : [Math.random() * 10, Math.random() * 10, Math.random() * 10],
-      scale: Math.random() * 1.5 + 1,
+
       color: randomHex.generate(),
-      altColor: randomHex.generate(),
     }
 
     setBoxes([...boxes, box])
-    setCount(count => count + 1)
   }
 
   return (
     <mesh
       ref={meshRef}
       position={position}
-      scale={1}
+      scale={3}
       onClick={() => {
         addBox()
       }}
       onPointerOver={e => setHover(true)}
       onPointerOut={e => setHover(false)}
     >
-      <boxGeometry args={[2, 1, 0.1]} />
+      <boxGeometry args={[0.2, 0.1, 0.01]} />
       <meshStandardMaterial color={hovered ? 'darkblue' : 'royalblue'} />
       <Text
         color='black'
         anchorX='center'
         anchorY='middle'
-        fontSize={'small'}
-        depthOffset={-1}
+        fontSize={0.04}
+        position={TEXTOFFSET}
       >
-        hello world!
+        Add Cube
       </Text>
     </mesh>
   )

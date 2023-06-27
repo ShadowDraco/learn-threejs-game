@@ -7,15 +7,7 @@ export default function RenderBoxes({ boxes }) {
   return (
     <>
       {boxes?.map((box, i) => {
-        return (
-          <BasicBox
-            key={i}
-            position={box.position}
-            scale={box.scale}
-            color={box.color}
-            altColor={box.altColor}
-          />
-        )
+        return <BasicBox key={i} position={box.position} color={box.color} />
       })}
     </>
   )
