@@ -1,21 +1,18 @@
 //* Linter not recognizing position/args props but its for react three */
 /* eslint-disable react/no-unknown-property */
-import {
-  PerspectiveCamera,
-  KeyboardControls,
-  useKeyboardControls,
-  Sky,
-} from '@react-three/drei'
-import { useMemo, useEffect, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { PerspectiveCamera, KeyboardControls, Sky } from '@react-three/drei'
+import { useRef, useState } from 'react'
+import { Canvas } from '@react-three/fiber'
 import RenderBoxes from './Blocks/RenderBoxes'
 import AddBoxButton from './UI/AddBoxButton'
 import { UIOFFSET } from './UI/Constants.js'
 import CameraController from './UI/CameraController'
+import Player from './Player'
 
 export default function ThreeCanvas() {
   const [boxes, setBoxes] = useState([])
   const AddBoxButtonMeshRef = useRef(null)
+  const PlayerRef = useRef(null)
   return (
     <>
       <KeyboardControls
@@ -43,6 +40,7 @@ export default function ThreeCanvas() {
                 boxes={boxes}
                 setBoxes={setBoxes}
               />,
+              <Player key='PLAYER' meshRef={PlayerRef} />,
             ]}
           />
 

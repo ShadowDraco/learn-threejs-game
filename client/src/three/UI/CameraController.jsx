@@ -10,7 +10,6 @@ const frontVector = new THREE.Vector3()
 const sideVector = new THREE.Vector3()
 
 export default function CameraController({ UIElements }) {
-  console.log(UIElements)
   const [, get] = useKeyboardControls()
   useFrame(state => {
     const { forward, backward, left, right } = get()

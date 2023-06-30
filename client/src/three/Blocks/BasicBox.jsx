@@ -1,8 +1,7 @@
 //* Linter not recognizing args but its for react three */
 /* eslint-disable react/no-unknown-property */
-import { useRef, useState } from 'react'
+import { useRef} from 'react'
 import PropTypes from 'prop-types'
-import { useFrame } from '@react-three/fiber'
 
 export default function BasicBox({ position, color }) {
   const meshRef = useRef(null)

@@ -2,17 +2,12 @@
 /* eslint-disable react/no-unknown-property */
 import { Text } from '@react-three/drei'
 import randomHex from 'random-hex-code-gen'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { FONTSIZE, TEXTOFFSET } from './Constants.js'
 
 export default function AddBoxButton({ position, boxes, setBoxes, meshRef }) {
   const [hovered, setHover] = useState(false)
-
-  useEffect(() => {
-    addBox([0, 0, 0])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const addBox = position => {
     const box = {
