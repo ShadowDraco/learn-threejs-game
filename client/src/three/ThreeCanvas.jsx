@@ -1,18 +1,30 @@
 //* Linter not recognizing position/args props but its for react three */
 /* eslint-disable react/no-unknown-property */
-import { PerspectiveCamera, KeyboardControls, Sky } from '@react-three/drei'
-import { useRef, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
-import RenderBoxes from './Blocks/RenderBoxes'
-import AddBoxButton from './UI/AddBoxButton'
-import { UIOFFSET } from './UI/Constants.js'
-import CameraController from './UI/CameraController'
-import Player from './Player'
+import { PerspectiveCamera, KeyboardControls, Sky } from '@react-three/drei';
+import { useRef, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import RenderBoxes from './Blocks/RenderBoxes';
+import AddBoxButton from './UI/AddBoxButton';
+import { UIOFFSET } from './UI/Constants.js';
+import CameraController from './UI/CameraController';
+import Player from './Player';
+import Bullet from './Player/Bullet';
+import RenderBullets from './Blocks/RenderBullets';
 
 export default function ThreeCanvas() {
-  const [boxes, setBoxes] = useState([])
-  const AddBoxButtonMeshRef = useRef(null)
-  const PlayerRef = useRef(null)
+  const [boxes, setBoxes] = useState([]);
+  const [bullets, setBullets] = useState([]);
+  const [clicking, setClicking] = useState(false);
+  const [shooting, setShooting] = useState(false);
+  const AddBoxButtonMeshRef = useRef(null);
+  const PlayerRef = useRef(null);
+
+  const shootBullet = props => {
+    const bullet = { ...props };
+
+    setBullets([...bullets, bullet]);
+  };
+
   return (
     <>
       <KeyboardControls
@@ -24,13 +36,26 @@ export default function ThreeCanvas() {
           { name: 'jump', keys: ['Space'] },
         ]}
       >
-        <Canvas shadows>
+        <Canvas
+          shadows
+          onMouseDown={() => {
+            setClicking(true);
+          }}
+          onMouseUp={() => {
+            setClicking(false);
+          }}
+        >
           <ambientLight />
           <pointLight position={[10, 10, 10]} />
 
-          <PerspectiveCamera makeDefault fov={75} position={[0, 0, 5]} />
+          <PerspectiveCamera
+            makeDefault
+            fov={75}
+            position={[0, 0, 5]}
+          />
 
           <CameraController
+            setShooting={setShooting}
             UIElements={[
               <AddBoxButton
                 meshRef={AddBoxButtonMeshRef}
@@ -40,14 +65,21 @@ export default function ThreeCanvas() {
                 boxes={boxes}
                 setBoxes={setBoxes}
               />,
-              <Player key='PLAYER' meshRef={PlayerRef} />,
+              <Player
+                key='PLAYER'
+                meshRef={PlayerRef}
+                clicking={clicking}
+                shootBullet={shootBullet}
+                shooting={shooting}
+              />,
             ]}
           />
 
           <RenderBoxes boxes={boxes} />
+          <RenderBullets bullets={bullets} />
           <Sky />
         </Canvas>
       </KeyboardControls>
     </>
-  )
+  );
 }
